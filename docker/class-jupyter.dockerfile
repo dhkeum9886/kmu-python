@@ -1,6 +1,10 @@
 FROM jupyter/base-notebook:python-3.9.12
-RUN pip install --upgrade pip setuptools wheel
-COPY requirements.txt /opt/app/requirements.txt
+
 WORKDIR /opt/app
-RUN pip install -r requirements.txt
+COPY requirements.txt /opt/app/requirements.txt
+
+RUN python -m pip install --upgrade pip wheel \
+ && python -m pip install 'setuptools<75' \
+ && python -m pip install --no-cache-dir -r requirements.txt
+
 WORKDIR /home/jovyan/work
